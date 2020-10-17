@@ -6,11 +6,11 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     title: "32BITS",
-    subtitle: "Juegos de PC",
+    subtitle: "Juegos de PC y Consola",
     menu: "",
     games: [
       {
-        id: "0001",
+        codigo: "0001",
         name: "Sekiro",
         stock: 100,
         price: 30000,
@@ -18,7 +18,7 @@ const store = new Vuex.Store({
         outstanding:true
       },
       {
-        id: "0002",
+        codigo: "0002",
         name: "Fifa 21",
         stock: 100,
         price: 25000,
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
         outstanding:false
       },
       {
-        id: "0003",
+        codigo: "0003",
         name: "Gears of War 4",
         stock: 100,
         price: 15000,
@@ -34,7 +34,7 @@ const store = new Vuex.Store({
         outstanding:true
       },
       {
-        id: "0004",
+        codigo: "0004",
         name: "Mario tennis Aces",
         stock: 100,
         price: 35000,
@@ -42,7 +42,7 @@ const store = new Vuex.Store({
         outstanding:false
       },
       {
-        id: "0005",
+        codigo: "0005",
         name: "Bloodborne",
         stock: 100,
         price: 10000,
@@ -50,19 +50,22 @@ const store = new Vuex.Store({
         outstanding:false
       },
       {
-        id: "0006",
+        codigo: "0006",
         name: "Forza Horizon 4",
         stock: 100,
         price: 20000,
         color:"red",
         outstanding:true
       }
-    ],
-    productosVendidos: []
+    ]
   },
   getters: {
-    searchById: (_state, getters) => id => {
-      return 
+    availableGames(state){
+      return state.games.filter(game => game.stock > 0);
+    },
+    searchById: (_state, getters) => codigo =>  getters.availableGames.filter(game => game.codigo == codigo),
+    totalStock(state){
+      return state.games.reduce((acc, game) => acc + game.stock, 0)
     }
   },
   mutations: {},

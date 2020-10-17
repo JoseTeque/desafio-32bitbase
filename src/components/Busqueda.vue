@@ -1,25 +1,23 @@
 <template>
   <div>
+      
+      <List :games="availableGames" />
       <h2>Busca tu juego</h2>
       <input type="text" v-model="searchId">
-
       <ul>
-          <li v-for="game in searchByIdGames" :key="game.id">
-              {{game.id}} | {{gama.name}} | {{gama.stock}} | {{gama.price}}
+          <li v-for="game in searchByIdGames" :key="game.codigo">
+              {{game.codigo}} | {{game.name}} | {{game.stock}} | {{game.price}}
           </li>
       </ul>
 
-      <ul>
-          <li v-for="game in games" :key="game.id">
-              {{game.name}}
-          </li>
-      </ul>
+      <h2>Cantidad de juegos totales: {{totalStock}}</h2>
   </div>
 </template>
 
 <script>
 
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import List from '@/components/List'
 export default {
 
     data(){
@@ -27,12 +25,14 @@ export default {
             searchId: ""
         }
     },
+    components:{
+        List
+    },
     computed: {
-        ...mapGetters([]),
-        ...mapState(["games"]),
+        ...mapGetters(["availableGames", "searchById", "totalStock"]),
         searchByIdGames(){
-            
-        }   
+            return this.searchById(this.searchId)
+        }
     }
 
 }
